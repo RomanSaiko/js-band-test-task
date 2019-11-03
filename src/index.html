@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ciklum University: JS Band Internship</title>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <h1>TODOList</h1>
+    </div>
+  </header>
+
+  <div class="content-wrapper">
+    <div class="container">
+      <form id="filter-form">
+        <div class="filter-wrapper">
+          <div class="filter__item">
+            <input class="input__item" type="search" placeholder="Search by title" id="search-title">
+          </div>
+          <div class="filter__item">
+            <select class="select__item" id="filter-status">
+              <option value="all">all</option>
+              <option value="open">open</option>
+              <option value="done">done</option>
+            </select>
+          </div>
+          <div class="filter__item">
+            <select class="select__item" id="filter-priority">
+              <option value="all">all</option>
+              <option value="high">high</option>
+              <option value="normal">normal</option>
+              <option value="low">low</option>
+            </select>
+          </div>
+          <button class="btn btn--blue" id="show-modal" type="button">Create</button>
+        </div>
+      </form>
+      <div class="list-wrapper">
+        <ul id="task-list"></ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <h2>Roman Saiko</h2>
+    </div>
+  </footer>
+
+  <div id="modal" class="modal">
+    <div class="modal__content">
+      <div class="modal__body">
+        <form id="create-task">
+          <p>Title:</p>
+          <input class="input__item" type="text" id="task-title" required>
+          <p>Description:</p>
+          <input class="input__item" type="text" id="task-description">
+          <p>Priority:</p>
+          <select class="select__item" id="task-priority">
+            <option value="high">high</option>
+            <option value="normal">normal</option>
+            <option value="low">low</option>
+          </select>
+          <div class="modal__buttons">
+            <button type="reset" class="btn btn--bordered" id="close-modal">Cancel</button>
+            <button type="submit" class="btn btn--blue">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
