@@ -62,11 +62,13 @@ function Display() {
         },
         closeModal: function() {
             const modal = document.getElementById("modal");
+            const filterForm = document.getElementById("filter-form");
             const createForm = document.getElementById("create-task");
             if (modal.classList.contains("show")) {
                 modal.classList.remove("show");
             }
             createForm.reset();
+            filterForm.reset();
         }
     };
 }
@@ -102,7 +104,7 @@ function HandleEvent() {
             Display().getDataList(tasksList);
             Display().closeModal();
         },
-        changeSelect: function({target}) {
+        changeInputs: function({target}) {
             const currentValue = target.value;
             if (target.id === "filter-status" ) {
                 filterBySelect(true, currentValue);
@@ -110,10 +112,7 @@ function HandleEvent() {
             else if (target.id === "filter-priority") {
                 filterBySelect(false, currentValue);
             }
-        },
-        changeInput: function({target}) {
-            if (target.id === "search-title") {
-                const currentValue = target.value;
+            else if (target.id === "search-title") {
                 if (currentValue) {
                     filterTasksListByTitle(currentValue);
                 }
@@ -153,7 +152,7 @@ function HandleEvent() {
                     taskOptions.setAttribute("contenteditable", "true");
                     target.textContent = 'Save';
                 }
-                //some function that check if array was edit and form and return new array
+                //some function that check if array was edit, form and return new array
                 Store().editTask();
             }
             else if (target.classList.contains("task-delete")) {
@@ -205,11 +204,8 @@ function Init() {
     const createForm = document.getElementById("create-task");
     createForm.addEventListener("submit", HandleEvent().submitTaskForm);
 
-    const searchTitleInput = document.getElementById("search-title");
-    searchTitleInput.addEventListener("input", HandleEvent().changeInput);
-
     const formWrap = document.querySelector(".filter-wrapper");
-    formWrap.addEventListener("change", HandleEvent().changeSelect);
+    formWrap.addEventListener("change", HandleEvent().changeInputs);
 
     const parentTasksContainer = document.getElementById("task-list");
     parentTasksContainer.addEventListener("click", HandleEvent().clickTaskOptions);
