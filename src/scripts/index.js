@@ -13,7 +13,10 @@ function Store() {
         deleteTask: function(id) {
             tasksList = tasksList.filter(item => item.id !== id );
         },
-        editTask: function(task) {
+        updateTask: function() {
+            return tasksList;
+        },
+        editTask: function() {
             return tasksList;
         }
     };
@@ -32,12 +35,19 @@ function Display() {
         },
         createTaskItemNode: function(task) {
             const { title, description, status, priority, id } = task;
+            let buttonStatusText;
+            if (status === "open") {
+                buttonStatusText = "Done";
+            }
+            else {
+                buttonStatusText = "Open";
+            }
             const taskItem = `
-            <li class="list__item" data-id="${id}" data-status="open">
+            <li class="list__item" data-id="${id}" data-status=${status}>
                 <p>${title}</p>
                 <p>${description}</p>
                 <p>${priority}</p>
-                <div class="option-wrapper"><span>&#8231;&#8231;&#8231;</span><ul><li class="task-done">Done</li><li class="task-edit">Edit</li><li class="task-delete">Delete</li></ul></div>
+                <div class="option-wrapper"><span>&#8231;&#8231;&#8231;</span><ul><li class="task-done">${buttonStatusText}</li><li class="task-edit">Edit</li><li class="task-delete">Delete</li></ul></div>
             </li>`;
             return taskItem;
         },
@@ -116,16 +126,22 @@ function HandleEvent() {
         clickTaskOptions: function ({target}) {
             if (target.classList.contains("task-done")) {
                 const parentEl = target.closest(".list__item");
-                if(parentEl.dataset.status === "open"){
-                    parentEl.dataset.status = "done";
-                    parentEl.classList.add("list__item--done");
-                    target.textContent = "Open";
+                const id = target.closest(".list__item").dataset.id;
+                for (let i in tasksList) {
+                    if (tasksList[i].id === id) {
+                        if(parentEl.dataset.status === "open"){
+                            tasksList[i].status = "done";
+                            parentEl.dataset.status = "done";
+                            target.textContent = "Open";
+                        }
+                        else {
+                            tasksList[i].status = "open";
+                            parentEl.dataset.status = "open";
+                            target.textContent = "Done";
+                        }
+                    }
                 }
-                else {
-                    parentEl.dataset.status = "open";
-                    parentEl.classList.remove("list__item--done");
-                    target.textContent = "Done";
-                }
+                Store().updateTask(id);
             }
             else if (target.classList.contains("task-edit")) {
                 const taskOptions = target.closest(".list__item");
@@ -138,7 +154,7 @@ function HandleEvent() {
                     target.textContent = 'Save';
                 }
                 //some function that check if array was edit and form and return new array
-                Store().editTask(task);
+                Store().editTask();
             }
             else if (target.classList.contains("task-delete")) {
                 const parentEl = target.closest(".list__item");

@@ -179,7 +179,8 @@ body {
     border: 1px solid $themeColor;
     list-style-type: none;
 
-    &--done {
+    &[data-status="done"] {
+    //&--done {
       position: relative;
       opacity: 0.5;
       background-color: #dff0ff;
