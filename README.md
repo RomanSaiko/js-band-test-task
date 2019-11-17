@@ -1,3 +1,6 @@
+### Demo
+https://romansaiko.github.io/js-band-test-task/
+
 ### Installation
 ```
 npm install
